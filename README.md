@@ -48,7 +48,9 @@ Follows the open **[Agent Skills standard](https://agentskills.io/specification)
 | Capability | Used for |
 |------------|----------|
 | **iOS Simulator / `xcrun simctl`** | Real app screenshots (see [references/sim-screenshots.md](references/sim-screenshots.md)) |
-| **Image generation** (e.g. Cursor `GenerateImage`) | Feature board, hero mockup, strip, newsletter banner |
+| **Browser automation** (e.g. Cursor browser MCP) | Real web app captures |
+| **Windows PowerShell + `System.Drawing`** | Web feature series compositing ([references/web-feature-series.md](references/web-feature-series.md)) |
+| **Image generation** (e.g. Cursor `GenerateImage`) | Mobile feature board, hero mockup, strip, newsletter banner |
 | **App icon + screenshots as references** | Brand-accurate posters |
 | **README `## Version History`** | “What’s new” copy source |
 
@@ -169,7 +171,7 @@ marketing posters for the current version
 1. **Confirms** target version (default: README `### vX.Y.Z (Current)`) and baseline for “what’s new”  
 2. **Parses** Version History into user-facing feature themes  
 3. **Builds / installs** the app on Simulator and captures key tabs  
-4. **Generates** feature board, hero mockup, feature strip, newsletter banner  
+4. **Generates** feature board, hero mockup, feature strip, newsletter banner (mobile), or a **cover + one image per feature** built from real screenshots (web)  
 5. **Writes** `NEWSLETTER.md` and copies assets to Desktop + `marketing/<VERSION>/`  
 6. **Reports** paths and any screens that could not be captured  
 
@@ -184,9 +186,26 @@ marketing posters for the current version
 | Hero mockup | `HAR-StockApp-<VER>-hero-mockup.png` |
 | Feature strip | `HAR-StockApp-<VER>-feature-strip.png` |
 | Newsletter banner | `HAR-StockApp-<VER>-newsletter-banner.png` |
+| Web feature series | `marketing/<VERSION>/features/<Product>-<VER>-feature-00-cover.png` … `-feature-08-<slug>.png` |
 | Newsletter copy | `marketing/<VERSION>/NEWSLETTER.md` |
 
 Also copied to `~/Desktop/` where applicable.
+
+### Web feature series
+
+Web apps get a set of 1920×1080 images: a cover plus one image per feature. Each image follows the same layout:
+
+- **Text column:** an eyebrow label, a title, one sentence and three bullets.
+- **Screenshot:** a real capture in a browser frame. Everything except the feature is faded, the feature gets one outline, and numbered markers match the bullets.
+- **Footer:** the app icon, version and page count.
+
+A JSON spec drives the script, so the series can be rebuilt for any version:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File references/build-feature-series.ps1 -Spec marketing/<VERSION>/features/feature-series.json
+```
+
+See [references/web-feature-series.md](references/web-feature-series.md) for the layout spec and capture tips, and [references/feature-series.example.json](references/feature-series.example.json) for a template.
 
 ---
 
@@ -204,7 +223,10 @@ Repo layout:
 promote-app-release/
 ├── SKILL.md                         # Main marketing pipeline
 ├── references/
-│   └── sim-screenshots.md           # xcrun / AppleScript helpers
+│   ├── sim-screenshots.md           # xcrun / AppleScript helpers
+│   ├── web-feature-series.md        # Web layout spec, capture tips, gotchas
+│   ├── build-feature-series.ps1     # Composites the web feature series
+│   └── feature-series.example.json  # Spec template
 ├── README.md                        # Install & usage
 └── LICENSE                          # MIT
 ```

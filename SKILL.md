@@ -2,16 +2,21 @@
 name: promote-app-release
 description: >-
   Builds a release marketing pack from README Version History: device
-  screenshots, GenerateImage feature board and phone/web mockup posters, and a
-  newsletter draft. Asks for brand/app icon (if not already defined) and
-  platform (Android, iOS, or web). Use when the user says promote release,
-  marketing posters, release newsletter, App Store / Play Store promo images,
-  or asks for release marketing after publish-new-version.
-compatibility: Requires device/simulator tooling for screenshots and GenerateImage for posters.
+  screenshots, GenerateImage feature board and phone mockup posters, and a
+  newsletter draft. For web apps, builds a professional one-image-per-feature
+  series composited from real browser captures. Asks for brand/app icon (if
+  not already defined) and platform (Android, iOS, or web). Use when the user
+  says promote release, marketing posters, release newsletter, feature
+  highlight images, App Store / Play Store promo images, or asks for release
+  marketing after publish-new-version.
+compatibility: >-
+  Requires device/simulator tooling (mobile) or a browser automation tool
+  (web) for screenshots, GenerateImage for mobile posters, and Windows
+  PowerShell System.Drawing for the web feature series.
 license: MIT
 metadata:
   author: carrick87
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # Promote app release
@@ -91,7 +96,7 @@ flowchart TD
   readPub[Read publish-new-version skill + README Version History]
   delta[Diff features since baseline]
   shots[Capture screenshots for chosen platform]
-  gen[GenerateImage posters with icon + screenshots]
+  gen[Mobile: GenerateImage posters / Web: composited feature series]
   news[Draft newsletter copy]
   out[Save to Desktop and marketing/VERSION/]
   trigger --> ask --> readPub --> delta --> shots --> gen --> news --> out
@@ -114,7 +119,7 @@ Match capture tooling to the chosen **platform**:
 |----------|--------|-------|
 | **iOS** | Booted iPhone Simulator | Commands: [references/sim-screenshots.md](references/sim-screenshots.md) |
 | **Android** | Booted Android emulator / device (`adb`) | Capture key tabs; use `screencap` |
-| **Web** | Running local/staging URL | Full-page or key-route screenshots |
+| **Web** | Running local/staging URL via browser MCP | 1× viewport captures, overlay/scrollbars hidden, personal data masked — see [references/web-feature-series.md](references/web-feature-series.md) |
 
 Minimum set depends on the app. For **HAR StockApp** (iOS default):
 
@@ -132,6 +137,22 @@ Write to `marketing/screenshots/<VERSION>/`.
 If UI automation fails, drive as far as possible, document any missing screen in the newsletter footnote, and continue with available shots + icon.
 
 ### 3) Generate marketing images
+
+#### Web: feature series (default)
+
+For **Web**, the primary deliverable is a **feature series**: a cover plus one 1920×1080 image per feature, composited from the real captures. Do not let `GenerateImage` redraw app UI for web; it misorders and mislabels screens.
+
+1. Optionally run a design review with a strong reviewer subagent (critique + layout spec + per-feature copy) before building, especially if the user calls earlier images unprofessional.
+2. Pick 6–8 features from Version History (whole app if asked). Each one gets a title of 5 words or fewer, a body of 18 words or fewer, and 3 bullets.
+3. Capture and measure element boxes at capture size, then write `marketing/<VERSION>/features/feature-series.json` (template: [references/feature-series.example.json](references/feature-series.example.json)).
+4. Build: `powershell -NoProfile -ExecutionPolicy Bypass -File <skill>/references/build-feature-series.ps1 -Spec marketing/<VERSION>/features/feature-series.json`
+5. **Look at every output image.** Fix markers that cover labels, titles that leave a one-word line, and cut-off highlighted rows. Then rebuild.
+
+Layout, highlight style, capture tricks, and PowerShell gotchas: [references/web-feature-series.md](references/web-feature-series.md).
+
+The four `GenerateImage` assets below are optional for web. Build them only if the user asks for them.
+
+#### Mobile (and optional web extras)
 
 Use **`GenerateImage`** with `reference_image_paths` = **confirmed app icon** + real screenshots. Follow **`imagegen-frontend-mobile`** (device frames, readable UI) and **`brandkit`** (sparse boards) spirit: Harbour Teal / navy when that is the brand palette, readable type.
 
@@ -161,7 +182,8 @@ Copy outputs to:
 
 Write `marketing/<VERSION>/NEWSLETTER.md` (and Desktop copy) that:
 
-- Embeds the four filenames
+- Embeds the four filenames, or for web the cover + feature series in order
+- Lists the source capture behind each image and anything masked or left out (e.g. a report that timed out)
 - Summarizes user-facing bullets for Slack/email paste
 - Includes a short subject line and CTA matching the chosen platform (Google Play / App Store / web)
 
@@ -170,7 +192,7 @@ Write `marketing/<VERSION>/NEWSLETTER.md` (and Desktop copy) that:
 List absolute paths for:
 
 - Screenshots folder
-- Four images (Desktop + `marketing/<VERSION>/`)
+- Four images, or for web the feature series (Desktop + `marketing/<VERSION>/`)
 - Newsletter path
 - Icon path used
 - Platform targeted

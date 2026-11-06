@@ -1,0 +1,67 @@
+{
+  "product": "Sales orders",
+  "filePrefix": "HSSB-SalesOrders",
+  "version": "1.5.10",
+  "company": "Harrisons Sabah Sdn Bhd",
+  "urlLabel": "sales-orders  ·  Harrisons Sabah",
+  "shotsDir": "../../screenshots/1.5.10/hires",
+  "outDir": ".",
+  "icon": "../app-icon.png",
+  "palette": {
+    "background": "#F4F6F9", "ink": "#1A2332", "brand": "#1B4F9C", "body": "#3D4A5C",
+    "muted": "#6B7686", "rule": "#DDE2E9", "chrome": "#EEF1F5"
+  },
+  "fonts": {
+    "regular": "Fira Sans", "semibold": "Fira Sans SemiBold", "mono": "Fira Mono Medium",
+    "files": [
+      { "file": "FiraSans-Regular.ttf", "url": "https://github.com/google/fonts/raw/main/ofl/firasans/FiraSans-Regular.ttf" },
+      { "file": "FiraSans-SemiBold.ttf", "url": "https://github.com/google/fonts/raw/main/ofl/firasans/FiraSans-SemiBold.ttf" },
+      { "file": "FiraMono-Medium.ttf", "url": "https://github.com/google/fonts/raw/main/ofl/firamono/FiraMono-Medium.ttf" }
+    ]
+  },
+  "cover": {
+    "shot": "ledger.png", "crop": [0, 0, 1404, 960],
+    "eyebrow": "HARRISONS SABAH  ·  RELEASE 1.5.10",
+    "subtitle": "The branch ledger for every Harrisons Sabah branch.",
+    "newItems": [
+      "Export takes the whole selection by default",
+      "A selection Total above the page Sub-total",
+      "Group list starts empty; Reset returns there"
+    ]
+  },
+  "features": [
+    {
+      "n": "01", "tag": "BRANCH", "title": "Branch at a glance", "shot": "ledger.png", "crop": [0, 0, 1254, 840],
+      "body": "The header shows the open balance, late orders and document mix for the branch you pick.",
+      "bullets": [
+        { "n": "1", "text": "Pick a branch, or ALL for every branch" },
+        { "n": "2", "text": "Open balance, open orders and orders past ship date" },
+        { "n": "", "text": "Document mix and the last updated time" }
+      ],
+      "outlines": [[7, 151, 143, 39], [180, 21, 590, 106]],
+      "markers": [[150, 151, "1"], [770, 21, "2"]]
+    },
+    {
+      "n": "02", "tag": "BUSINESS UNIT", "title": "Business units", "shot": "ledger.png", "crop": [150, 0, 1254, 840],
+      "body": "Choose FMCG, TPD, CNF or Others. The group list and the sheet follow your choice.",
+      "bullets": [
+        { "n": "", "text": "Four units: FMCG, TPD, CNF and Others" },
+        { "n": "", "text": "Tick more than one unit at a time" },
+        { "n": "", "text": "Group lists show only the units you tick" }
+      ],
+      "outlines": [[180, 155, 415, 43]],
+      "markers": []
+    },
+    {
+      "n": "03", "tag": "EXPORT", "title": "Export to Excel", "shot": "ledger.png", "crop": [150, 140, 1254, 840],
+      "body": "Download a workbook of what you are looking at, with the same columns and filters.",
+      "bullets": [
+        { "n": "1", "text": "Export workbook takes the whole selection" },
+        { "n": "2", "text": "Tick Export current page rows for this page only" },
+        { "n": "", "text": "Sheets: Lines, By item group, By sales group" }
+      ],
+      "outlines": [[1021, 281, 361, 39]],
+      "markers": [[1300, 348, "1"], [1040, 348, "2"]]
+    }
+  ]
+}
