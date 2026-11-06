@@ -4,7 +4,8 @@ description: >-
   Builds a release marketing pack from README Version History: device
   screenshots, GenerateImage feature board and phone mockup posters, and a
   newsletter draft. For web apps, builds a professional one-image-per-feature
-  series composited from real browser captures. Asks for brand/app icon (if
+  series composited from real browser captures (`/promote-app-release
+  feature-series` runs only that). Asks for brand/app icon (if
   not already defined) and platform (Android, iOS, or web). Use when the user
   says promote release, marketing posters, release newsletter, feature
   highlight images, App Store / Play Store promo images, or asks for release
@@ -16,7 +17,7 @@ compatibility: >-
 license: MIT
 metadata:
   author: carrick87
-  version: "1.2.0"
+  version: "1.3.0"
 ---
 
 # Promote app release
@@ -36,6 +37,42 @@ Apply when the user says any of:
 - release newsletter
 - App Store / Play Store promo images
 - “make posters for vX.Y.Z”
+
+## Commands
+
+| Command | Runs |
+|---------|------|
+| `/promote-app-release` | Full pack: screenshots, images for the chosen platform, and the newsletter |
+| `/promote-app-release feature-series` | **Only** the feature series: a cover plus one 1920×1080 image per feature, built from real web captures |
+
+`feature-series` also runs when the user says any of: *feature series*, *feature intro images*, *one image per feature*, *intro each feature*, *feature highlight images*, *make it professional* (about earlier promo images), or *create like this* while pointing at an existing feature series.
+
+### `feature-series` command
+
+Platform is **web** unless the user says otherwise. Ask for the app icon only if it isn't already defined. Do not bump the version.
+
+1. **Features:** read README Version History and pick 6–8 user-facing features. Use the whole app unless the user asks for what's new only. For each, write a tag, a title of 5 words or fewer, a body of 18 words or fewer, and 3 bullets. Keep the copy factual, with no exclamation marks.
+2. **Review (optional):** if earlier images exist or the user calls them unprofessional, have a reviewer subagent critique them first and return a spec and copy. The reviewer doesn't edit files.
+3. **Capture:** take the screenshots at 1× in the running app, following [references/web-feature-series.md](references/web-feature-series.md):
+   - Remove the dev overlay and hide scrollbars.
+   - Mask personal data.
+   - Put each screen into a real state that shows the feature.
+   - Save to `marketing/screenshots/<VERSION>/hires/`.
+4. **Measure:** get element boxes with `getBoundingClientRect()` at the capture viewport size. Use one crop width for every feature, such as 1254.
+5. **Spec:** copy [references/feature-series.example.json](references/feature-series.example.json) to `marketing/<VERSION>/features/feature-series.json`. Fill in product, version, palette, fonts, cover, and for each feature the crop, at most 2 outlines and at most 3 markers. Each marker number must match a numbered bullet.
+6. **Build:**
+   ```powershell
+   powershell -NoProfile -ExecutionPolicy Bypass -File "<skill dir>/references/build-feature-series.ps1" -Spec "marketing/<VERSION>/features/feature-series.json"
+   ```
+7. **Check:** open every image. Fix any of these, then rebuild:
+   - A marker covers a label.
+   - A title leaves one word on its own line.
+   - A highlighted row is cut off.
+   - Text overlaps the footer.
+8. **Deliver:**
+   - Copy the images to `~/Desktop/<Product>-<VER>-features/`.
+   - Embed them in order in `marketing/<VERSION>/NEWSLETTER.md`, with the source capture behind each one and anything masked or left out.
+   - Report the paths.
 
 ## Preconditions — ask before generating
 

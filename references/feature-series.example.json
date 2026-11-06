@@ -53,7 +53,51 @@
       "markers": []
     },
     {
-      "n": "03", "tag": "EXPORT", "title": "Export to Excel", "shot": "ledger.png", "crop": [150, 140, 1254, 840],
+      "n": "03", "tag": "GROUPS", "title": "Narrow by group", "shot": "sales.png", "crop": [150, 226, 1254, 859],
+      "body": "Work by item group or by sales group. Tick one, several, or all of them.",
+      "bullets": [
+        { "n": "1", "text": "Switch between item groups and sales groups" },
+        { "n": "2", "text": "Select all, or Reset to the default" },
+        { "n": "3", "text": "Tick several groups to see them together" }
+      ],
+      "outlines": [[180, 232, 223, 41], [180, 337, 233, 746]],
+      "markers": [[403, 232, "1"], [413, 337, "2"], [413, 586, "3"]]
+    },
+    {
+      "n": "04", "tag": "FILTERS", "title": "Filter and find", "shot": "ledger.png", "crop": [150, 0, 1254, 840],
+      "body": "Limit the list by created date, modified date and status, or find a single order.",
+      "bullets": [
+        { "n": "1", "text": "Created from and to date" },
+        { "n": "2", "text": "Modified from and to date" },
+        { "n": "3", "text": "Status, and Find by order, customer or account" }
+      ],
+      "outlines": [[410, 212, 958, 62]],
+      "markers": [[430, 280, "1"], [722, 280, "2"], [985, 280, "3"]]
+    },
+    {
+      "n": "05", "tag": "TOTALS", "title": "Selection totals", "shot": "ledger.png", "crop": [150, 320, 1254, 859],
+      "body": "The Total covers the whole selection. The Sub-total covers only the page on screen.",
+      "bullets": [
+        { "n": "1", "text": "Total: every order in the selection" },
+        { "n": "2", "text": "Sub-total: only the rows on this page" },
+        { "n": "", "text": "HAR_SOAmount, HAR_InvoicedAmount and HAR_SOBalance" }
+      ],
+      "outlines": [[428, 377, 954, 52], [428, 1048, 954, 52]],
+      "markers": [[422, 371, "1"], [422, 1042, "2"]]
+    },
+    {
+      "n": "06", "tag": "TABLE", "title": "Shape the table", "shot": "colfilter.png", "crop": [150, 326, 1254, 859],
+      "body": "Sort, filter and reorder columns. Show 50, 100, 200 or 500 rows a page.",
+      "bullets": [
+        { "n": "1", "text": "Click a column title to sort" },
+        { "n": "2", "text": "Commas match several values, such as 079222, 079S03" },
+        { "n": "3", "text": "Drag titles to reorder. Reset columns undoes it." }
+      ],
+      "outlines": [[428, 444, 954, 62], [763, 1142, 122, 39]],
+      "markers": [[414, 475, "1"], [842, 422, "2"], [885, 1142, "3"]]
+    },
+    {
+      "n": "07", "tag": "EXPORT", "title": "Export to Excel", "shot": "ledger.png", "crop": [150, 140, 1254, 840],
       "body": "Download a workbook of what you are looking at, with the same columns and filters.",
       "bullets": [
         { "n": "1", "text": "Export workbook takes the whole selection" },
@@ -62,6 +106,17 @@
       ],
       "outlines": [[1021, 281, 361, 39]],
       "markers": [[1300, 348, "1"], [1040, 348, "2"]]
+    },
+    {
+      "n": "08", "tag": "ACCESS", "title": "Branch access", "shot": "people.png", "crop": [150, 0, 1254, 840],
+      "body": "Super users assign roles and branches on People. Everyone signs in with a harrisons.com.my email and an 8-digit code.",
+      "bullets": [
+        { "n": "1", "text": "Add someone before they sign in" },
+        { "n": "2", "text": "Roles: super user, admin and normal user" },
+        { "n": "3", "text": "Tick ALL for every branch, including future ones" }
+      ],
+      "outlines": [[180, 175, 1202, 120], [585, 325, 797, 92]],
+      "markers": [[180, 175, "1"], [593, 316, "2"], [900, 316, "3"]]
     }
   ]
 }

@@ -152,6 +152,14 @@ make posters for v3.2.9
 ```
 
 ```
+/promote-app-release feature-series
+```
+
+```
+create one image per feature for the web app
+```
+
+```
 release newsletter and App Store promo images
 ```
 
